@@ -9,7 +9,7 @@ const HomeScreen = ({ navigation }) => {
       <Text style={[styles.title1, ]}>Kenalan dulu yuk!</Text>
       <TouchableOpacity
         style={[styles.button, { backgroundColor: '#C7FFD8' }]}
-        onPress={() => navigation.navigate('SingUpGuru')}>
+        onPress={() => navigation.navigate('Daftar')}>
           <Image style={styles.gambar} source={require('../assets/guru.png')}></Image>
         <Text style={styles.buttonText}>Guru</Text>
       </TouchableOpacity>

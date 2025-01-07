@@ -1,68 +1,131 @@
-import React, { useState, useEffect } from 'react';
-import { View, Text, StyleSheet,Image } from 'react-native';
+import React from 'react';
+import { View, Text, Image, StyleSheet } from 'react-native';
 
+const Header = () => {
+  return (
+    <View style={styles.header}>
+      {/* Profil */}
+      <View style={styles.profileContainer}>
+        <Image
+          source={{ uri: 'https://via.placeholder.com/40' }} // Ganti dengan URL gambar Anda
+          style={styles.profileImage}
+        />
+        <View style={styles.profileText}>
+          <Text style={styles.name}>Maulana Riski</Text>
+          <Text style={styles.rank}>#1_dikelas</Text>
+        </View>
+      </View>
 
-const Header = () =>{
-    return(
-        <View style={styles.header}>
-                <Image style={styles.gambar} source={require('../../assets/S.png')} />
-                <View>
-                <Text style={styles.nama}>Nama Kamu</Text>
-                <Text style={styles.titl}>Title</Text>
-                </View>
-                <Image style={styles.gambarh} source={require('../../assets/gambarh.png')} />
-                <Image style={styles.bell} source={require('../../assets/bell.png')} />
-              </View>
-    );
+      {/* Total Tugas */}
+      <View style={styles.taskContainer}>
+        <View style={styles.taskTitle}>
+          <Text style={styles.taskTitleText}>Total Tugas</Text>
+        </View>
+        <View style={styles.taskStatus}>
+          <View style={[styles.taskItem, styles.taskCompleted]}>
+            <Text style={styles.taskNumberBlack}>10</Text>
+            <Text style={styles.taskLabelBlack}>Selesai</Text>
+          </View>
+          <View style={[styles.taskItem, styles.taskIncomplete]}>
+            <Text style={styles.taskNumberBlack}>5</Text>
+            <Text style={styles.taskLabelBlack}>Belum</Text>
+          </View>
+        </View>
+      </View>
+
+      {/* Notifikasi */}
+      <Image
+        source={{ uri: 'https://via.placeholder.com/24' }} // Ganti dengan URL gambar lonceng Anda
+        style={styles.notificationIcon}
+      />
+    </View>
+  );
 };
 
+const styles = StyleSheet.create({
+  header: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    paddingHorizontal: 16,
+    paddingVertical: 30,
+    backgroundColor: '#B4ECE3', // Warna latar header
+    shadowColor: '#000', // Warna bayangan
+    shadowOffset: { width: 0, height: 4 }, // Arah bayangan
+    shadowOpacity: 0.2, // Opasitas bayangan
+    shadowRadius: 10, // Radius bayangan
+    elevation: 10, // Untuk perangkat Android
+    borderBottomLeftRadius: 50,
+    borderBottomRightRadius: 50,
+  },
+  profileContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    marginRight: 60,
+    marginTop:10,
+  },
+  profileImage: {
+    width: 40,
+    height: 40,
+    borderRadius: 20,
+    backgroundColor: '#E0E0E0', // Placeholder untuk gambar
+  },
+  profileText: {
+    marginLeft: 8,
+  },
+  name: {
+    fontSize: 16,
+    fontWeight: 'bold',
+    color: '#000',
+  },
+  rank: {
+    fontSize: 12,
+    color: '#666',
+  },
+  taskContainer: {
+    alignItems: 'center',
+  },
+  taskTitle: {
+    backgroundColor: '#161D6F', // Warna latar "Total Tugas"
+    paddingHorizontal: 20,
+    paddingVertical: 4,
+    borderRadius: 4,
+  },
+  taskTitleText: {
+    fontSize: 9,
+    fontWeight: 'bold',
+    color: '#FFFFFF', // Warna teks "Total Tugas"
+  },
+  taskStatus: {
+    flexDirection: 'row',
+    marginTop: 4,
+  },
+  taskItem: {
+    alignItems: 'center',
+    marginHorizontal: 3,
+    borderRadius: 4,
+    paddingVertical: 4,
+    paddingHorizontal: 8,
+  },
+  taskCompleted: {
+    backgroundColor: '#B4FF9D', // Warna latar "Selesai"
+  },
+  taskIncomplete: {
+    backgroundColor: '#FF8D8D', // Warna latar "Belum"
+  },
+  taskNumberBlack: {
+    fontSize: 19,
+    fontWeight: 'bold',
+    color: '#000000', // Warna teks angka
+  },
+  taskLabelBlack: {
+    fontSize: 8,
+    color: '#000000', // Warna teks label
+  },
+  notificationIcon: {
+    width: 24,
+    height: 24,
+  },
+});
 
 export default Header;
-
-const styles = StyleSheet.create({
-    header: {
-        flexDirection: 'row',
-        alignItems: 'center',
-        justifyContent: 'flex-end',
-        paddingHorizontal: 20,
-        paddingVertical: 15,
-        backgroundColor: '#98DED9',
-        borderBottomLeftRadius: 50,
-        borderBottomRightRadius: 50,
-        shadowColor: '#000',
-        shadowOpacity: 0.25,
-        shadowRadius: 4,
-        elevation: 15,
-        height: 142,
-        width: 412,
-        columnGap:10
-      },
-
-      gambar: {
-        width: 40,
-        height: 40,
-        borderRadius: 20,
-        backgroundColor: '#EAF2FF',
-        justifyContent: 'center',
-        alignItems: 'center',
-        
-      },
-      titl:{
-        fontSize:9,
-      },
-    
-     
-      gambarh: {
-        width:183,
-        height: 40,
-        backgroundColor: '#B4DBFF',
-        justifyContent: 'center',
-        alignItems: 'center',
-        borderRadius: 8,
-      },
-      bell: {
-        width: 30,
-        height: 30,
-        resizeMode: 'contain',
-      },
-})

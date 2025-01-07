@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { View, Text, TextInput, Button, StyleSheet, Alert,Image,TouchableOpacity ,ScrollView} from 'react-native';
-
+import { LinearGradient } from 'expo-linear-gradient';
 
 const LoginScreen = ({ navigation }) => {
   const [email, setEmail] = useState('');
@@ -9,9 +9,9 @@ const LoginScreen = ({ navigation }) => {
   const handleLogin = () => {
     // Lakukan validasi login di sini
     if (email === 'murid@gmail.com' && password === 'test123') {
-      navigation.navigate('Murid');
+      navigation.navigate('TABMurid');
     }
-    if (email === 'guru@gmail.com' && password === 'test123') {
+    else if(email === 'guru@gmail.com' && password === 'test123') {
         navigation.navigate('Guru');
     } else {
       // Jika login gagal, tampilkan pesan error
@@ -24,8 +24,11 @@ const LoginScreen = ({ navigation }) => {
   };
 
   return (
-    
-    <View style={styles.container}>
+    <LinearGradient
+      colors={['#d4f6c6', '#ffffff']} // Gradasi dari hijau muda ke putih
+      style={styles.container}
+    >
+      <View style={styles.container}>
         <Image style={styles.gambar} source={require('../../assets/fokustime.png')}></Image>
         <Text style={styles.title1}>Belajar dengan fokus dan juga seru!</Text>
         <View style={styles.isi}>
@@ -56,6 +59,8 @@ const LoginScreen = ({ navigation }) => {
         </View>
       
     </View>
+    </LinearGradient>
+    
   );
 };
 
@@ -65,9 +70,7 @@ const styles = StyleSheet.create({
   },
   container: {
     flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: '#F6F6F6',
+    justifyContent: 'center',  
     paddingHorizontal: 20,
   },
   title1: {
