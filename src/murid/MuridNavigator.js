@@ -20,7 +20,7 @@ const NamesStack = () => (
   <Stack.Navigator  initialRouteName="IsiKelas">
     <Stack.Screen name="IsiKelas" component={KelasScreen} options={{ headerShown: false ,animation: "none"}} />
     <Stack.Screen name="DetailKelas" component={DetailKelasScreen} options={{ headerShown: false,animation: "none" }} />
-    <Stack.Screen name="Chat" component={ChatScreen} options={{ headerShown: false,animation: "none" }} />
+    
   </Stack.Navigator>
 );
 
@@ -79,19 +79,13 @@ const MuridNavigator = () => {
       })}
     >
       <Tab.Screen
-  name="Home"
-  options={{
-    tabBarLabel: '', // Menghilangkan label teks
-    headerShown: false,
-  }}
->
-  {() => (
-    <Stack.Navigator>
-      <Stack.Screen name="Home" component={MuridScreen} options={{ headerShown: false }} />
-      <Stack.Screen name="Notif" component={Notifikasi} options={{ headerShown: false, animation: "none" }} />
-    </Stack.Navigator>
-  )}
-</Tab.Screen>
+        name="Home"
+        component={MuridScreen}
+        options={{
+          tabBarLabel: '', // Menghilangkan label teks
+          headerShown: false
+        }}
+      />
 
       <Tab.Screen
         name="Kelas"
@@ -102,19 +96,13 @@ const MuridNavigator = () => {
         }}
       />
       <Tab.Screen
-  name="Pencapain"
-  options={{
-    tabBarLabel: '', // Menghilangkan label teks
-    headerShown: false,
-  }}
->
-  {() => (
-    <Stack.Navigator>
-      <Stack.Screen name="Pencapain" component={Pencapaian} options={{ headerShown: false }} />
-      <Stack.Screen name="Notif" component={Notifikasi} options={{ headerShown: false, animation: "none" }} />
-    </Stack.Navigator>
-  )}
-</Tab.Screen>
+        name="Pencapain"
+        component={Pencapaian}
+        options={{
+          tabBarLabel: '', // Menghilangkan label teks
+          headerShown: false
+        }}
+      />
       <Tab.Screen
         name="Pengaturan"
         component={Pengaturan}
