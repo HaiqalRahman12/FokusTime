@@ -10,13 +10,14 @@ import DetailKelasScreen from './kelas/DetailKelasScreen';
 import Pencapaian from '../screensmurid/Pencapain';
 import Pengaturan from '../screensmurid/Pengaturan';
 import ChatScreen from '../components/Chat';
+import Notifikasi from './Notifikasi';
 
 const Tab = createBottomTabNavigator();
 const Stack = createStackNavigator();
 
 
 const NamesStack = () => (
-  <Stack.Navigator>
+  <Stack.Navigator  initialRouteName="IsiKelas">
     <Stack.Screen name="IsiKelas" component={KelasScreen} options={{ headerShown: false ,animation: "none"}} />
     <Stack.Screen name="DetailKelas" component={DetailKelasScreen} options={{ headerShown: false,animation: "none" }} />
     <Stack.Screen name="Chat" component={ChatScreen} options={{ headerShown: false,animation: "none" }} />
@@ -78,13 +79,20 @@ const MuridNavigator = () => {
       })}
     >
       <Tab.Screen
-        name="Home"
-        component={MuridScreen}
-        options={{
-          tabBarLabel: '', // Menghilangkan label teks
-          headerShown: false
-        }}
-      />
+  name="Home"
+  options={{
+    tabBarLabel: '', // Menghilangkan label teks
+    headerShown: false,
+  }}
+>
+  {() => (
+    <Stack.Navigator>
+      <Stack.Screen name="Home" component={MuridScreen} options={{ headerShown: false }} />
+      <Stack.Screen name="Notif" component={Notifikasi} options={{ headerShown: false, animation: "none" }} />
+    </Stack.Navigator>
+  )}
+</Tab.Screen>
+
       <Tab.Screen
         name="Kelas"
         component={NamesStack}
@@ -94,13 +102,19 @@ const MuridNavigator = () => {
         }}
       />
       <Tab.Screen
-        name="Pencapain"
-        component={Pencapaian}
-        options={{
-          tabBarLabel: '', // Menghilangkan label teks
-          headerShown: false
-        }}
-      />
+  name="Pencapain"
+  options={{
+    tabBarLabel: '', // Menghilangkan label teks
+    headerShown: false,
+  }}
+>
+  {() => (
+    <Stack.Navigator>
+      <Stack.Screen name="Pencapain" component={Pencapaian} options={{ headerShown: false }} />
+      <Stack.Screen name="Notif" component={Notifikasi} options={{ headerShown: false, animation: "none" }} />
+    </Stack.Navigator>
+  )}
+</Tab.Screen>
       <Tab.Screen
         name="Pengaturan"
         component={Pengaturan}

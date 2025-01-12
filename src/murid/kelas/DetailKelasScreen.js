@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { View, Text, StyleSheet, TouchableOpacity,Image } from 'react-native';
+import React, { useState, useEffect } from 'react';
+import { View, Text, StyleSheet, TouchableOpacity, Image } from 'react-native';
 import Header from '../../components/Header';
 import TugasCard from './CardTugas';
 import MateriCard from './CardMateri';
@@ -9,13 +9,15 @@ const DetailKelasScreen = ({ route }) => {
   const { title, subtitle, totalSiswa } = route.params;
 
   const [activeTab, setActiveTab] = useState('Tugas');
+  const [elapsedTime, setElapsedTime] = useState(0); // Waktu dalam detik
+  const [timer, setTimer] = useState(null); // Simpan ID interval timer
 
   const renderContent = () => {
     switch (activeTab) {
       case 'Tugas':
-        return <TugasCard/>;
+        return <TugasCard />;
       case 'Materi':
-        return <MateriCard/>;
+        return <MateriCard elapsedTime={elapsedTime} />;
       case 'Siswa':
         return <SiswaNama title={title} subtitle={subtitle} totalSiswa={totalSiswa} />;
       default:
@@ -23,47 +25,69 @@ const DetailKelasScreen = ({ route }) => {
     }
   };
 
+  useEffect(() => {
+    if (activeTab === 'Materi') {
+      const interval = setInterval(() => {
+        setElapsedTime((prevTime) => prevTime + 1);
+      }, 1000);
+      setTimer(interval);
+    } else {
+      if (timer) {
+        clearInterval(timer);
+        setTimer(null);
+      }
+    }
+
+    return () => {
+      if (timer) {
+        clearInterval(timer);
+      }
+    };
+  }, [activeTab]);
+
+  const formatTime = (time) => {
+    const days = Math.floor(time / (60 * 60 * 24));
+    const hours = Math.floor((time % (60 * 60 * 24)) / (60 * 60));
+    const minutes = Math.floor((time % (60 * 60)) / 60);
+    const seconds = time % 60;
+    return `${days}d ${hours}h ${minutes}m ${seconds}s`;
+  };
+
   return (
     <View style={styles.container}>
       <Header />
       <View style={styles.detailContainer}>
-        <View style={styles.cardContainer}> 
-          <Image
-                style={styles.icon}
-                source={require('../../../assets/matematikakecil.png')}
-              />
-        <View style={styles.textContainer}>
-                <Text style={styles.title}>{title}</Text>
-                <Text style={styles.subtitle}>{subtitle}</Text>
-                <Text style={styles.totalSiswa}>
-                  Total Siswa: <Text style={styles.dynamicText}>{totalSiswa}</Text>
-                </Text>
-              </View>
+        <View style={styles.cardContainer}>
+          <Image style={styles.icon} source={require('../../../assets/matematikakecil.png')} />
+          <View style={styles.textContainer}>
+            <Text style={styles.title}>{title}</Text>
+            <Text style={styles.subtitle}>{subtitle}</Text>
+            <Text style={styles.totalSiswa}>
+              Total Siswa: <Text style={styles.dynamicText}>{totalSiswa}</Text>
+            </Text>
+          </View>
         </View>
-        
+
         <View style={styles.tabContainer}>
           {['Tugas', 'Materi', 'Siswa'].map((tab) => (
             <TouchableOpacity
               key={tab}
-              style={[
-                styles.tab,
-                activeTab === tab && styles.activeTab,
-              ]}
+              style={[styles.tab, activeTab === tab && styles.activeTab]}
               onPress={() => setActiveTab(tab)}
             >
-              <Text
-                style={[
-                  styles.tabText,
-                  activeTab === tab && styles.activeTabText,
-                ]}
-              >
-                {tab}
-              </Text>
+              <Text style={[styles.tabText, activeTab === tab && styles.activeTabText]}>{tab}</Text>
             </TouchableOpacity>
           ))}
         </View>
         <View style={styles.contentContainer}>{renderContent()}</View>
       </View>
+
+      {/* Total Waktu Belajar */}
+      {activeTab === 'Materi' && (
+        <View style={styles.footer}>
+          <Text style={styles.footerText}>Total Waktu Belajar: {formatTime(elapsedTime)}</Text>
+        </View>
+      )}
     </View>
   );
 };
@@ -89,30 +113,6 @@ const styles = StyleSheet.create({
   title: {
     fontSize: 23,
     fontWeight: 'bold',
-  },
-  subtitle: {
-    fontSize: 12,
-    color: '#555',
-  },
-  totalSiswa: {
-    fontSize: 17,
-    color: '#333',
-  },
-  dynamicText: {
-    fontWeight: 'bold',
-    color: '#000',
-  },
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-  },
-  detailContainer: {
-    flex: 1,
-    padding: 20,
-  },
-  title: {
-    fontSize: 23,
-    fontWeight: 'bold',
     color: '#333',
   },
   subtitle: {
@@ -129,6 +129,16 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     color: '#000',
   },
+  container: {
+    flex: 1,
+    backgroundColor: '#f6f6f6',
+    
+  },
+  detailContainer: {
+    flex: 1,
+    padding: 20,
+    
+  },
   tabContainer: {
     flexDirection: 'row',
     justifyContent: 'space-around',
@@ -136,6 +146,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#151C68',
     borderRadius: 10,
     padding: 10,
+    
   },
   tab: {
     flex: 1,
@@ -157,15 +168,17 @@ const styles = StyleSheet.create({
   },
   contentContainer: {
     flex: 1,
-    
     marginTop: 20,
-    
-    // backgroundColor: 'pink',
-    
   },
-  contentText: {
+  footer: {
+    backgroundColor: '#151C68',
+    padding: 15,
+    alignItems: 'center',
+    paddingBottom: 80,
+  },
+  footerText: {
     fontSize: 16,
-    color: '#333',
-    // textAlign: 'center',
+    color: '#FFFFFF',
+    fontWeight: 'bold',
   },
 });

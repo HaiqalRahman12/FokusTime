@@ -11,6 +11,7 @@ import MuridNavigator from '../src/murid/MuridNavigator';
 import IsiKelas from '../src/murid/kelas/IsiKelas';
 import DetailKelasScreen from '../src/murid/kelas/DetailKelasScreen';
 import SignUpScreenGuru from '../src/screens/SingUpGuru';
+import Notifikasi from '../src/murid/Notifikasi';
 
 const Stack = createStackNavigator();
 
@@ -29,6 +30,7 @@ const AppNavigator = () => {
 {/* kelas */}
       {/* <Stack.Screen name="IsiKelas" component={IsiKelas}   />
       <Stack.Screen name="DetailKelas" component={DetailKelasScreen}  /> */}
+      <Stack.Screen name="Notif" component={Notifikasi} options={{ headerShown: false, animation: "none" }} />
     </Stack.Navigator>
   );
 };

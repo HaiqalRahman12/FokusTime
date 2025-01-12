@@ -6,6 +6,7 @@ import {
   Image,
   StyleSheet,
   TouchableOpacity,
+  ScrollView,
 } from 'react-native';
 
 const MateriCard = () => {
@@ -27,9 +28,8 @@ const MateriCard = () => {
 
           {/* Kata "suda" */}
           <View style={styles.textColumnRight}>
-           <Text style={styles.sudaText}>sudah</Text>
+           <Text style={styles.sudaText}>Sudah</Text>
           </View>
-          
         </View>
 
         {/* Bagian Bawah */}
@@ -57,30 +57,38 @@ const MateriCard = () => {
   );
 };
 
+const App = () => {
+  return (
+    <ScrollView>
+      <MateriCard />
+    </ScrollView>
+  );
+};
+
 const styles = StyleSheet.create({
-  container: {
-    
-  },
   card: {
-    
+    marginBottom: 10,
+    backgroundColor: '#FFFFFF',
     borderRadius: 10,
     shadowColor: '#000',
-    shadowOpacity: 0.1,
+    shadowOpacity: 0.2,
     shadowOffset: { width: 0, height: 2 },
     shadowRadius: 4,
+    elevation: 2, // Untuk Android
+    
   },
   header: {
     backgroundColor: '#98DED9',
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
-    padding: 15,
+    padding: 10,
     borderTopLeftRadius: 10,
     borderTopRightRadius: 10,
   },
   icon: {
-    width: 40,
-    height: 40,
+    width: 67,
+    height: 67,
   },
   textColumnLeft: {
     flex: 1,
@@ -102,33 +110,38 @@ const styles = StyleSheet.create({
   sudaText: {
     fontSize: 14,
     fontWeight: 'bold',
-    
+    color: 'black',
+    backgroundColor: '#B4FF9D',
+    padding: 5,
+    borderRadius: 5,
+    marginBottom:20
   },
   body: {
     backgroundColor: '#FFFFFF',
-    padding: 15,
+    padding: 10,
     borderBottomLeftRadius: 10,
     borderBottomRightRadius: 10,
   },
   description: {
     fontSize: 14,
     color: '#004D40',
-    marginBottom: 10,
+    marginBottom: 5,
+    fontWeight: 'bold',
   },
   fileSection: {
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
-    marginTop: 10,
+    marginTop: 5,
   },
   fileInfo: {
     flexDirection: 'row',
     alignItems: 'center',
   },
   fileIcon: {
-    width: 24,
-    height: 24,
-    marginRight: 8,
+    width: 15,
+    height: 15,
+    marginRight: 2,
   },
   fileName: {
     fontSize: 14,
@@ -138,7 +151,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     backgroundColor: '#0288D1',
-    padding: 3,
+    padding: 5,
     borderRadius: 5,
   },
   buttonText: {
@@ -152,12 +165,8 @@ const styles = StyleSheet.create({
     tintColor: '#FFFFFF',
   },
   textColumnRight: {
-    alignItems: 'center', // Pusatkan teks "suda" secara horizontal
-    marginBottom: 30,
-    backgroundColor:'#B4FF9D',
-    padding:2,
-    borderRadius:5
+    alignItems: 'center',
   },
 });
 
-export default MateriCard;
+export default App;

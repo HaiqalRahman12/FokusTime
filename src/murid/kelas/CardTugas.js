@@ -6,9 +6,10 @@ import {
   Image,
   StyleSheet,
   TouchableOpacity,
+  ScrollView,
 } from 'react-native';
 
-const TugasCard = () => {
+const TugasCard = ({ title, subtitle, matpel, author, topik, tanggal, waktu, deskripsi, fileName, fileIcon, buttonIcon }) => {
   return (
     <SafeAreaView style={styles.container}>
       <View style={styles.card}>
@@ -20,37 +21,35 @@ const TugasCard = () => {
           />
 
           <View style={styles.textColumnLeft}>
-            <Text style={styles.title}>Matematika</Text>
-            <Text style={styles.author}>Wagi Artono</Text>
-            <Text style={styles.subtitle}>Tugas 1 | Trigonometri</Text>
+            <Text style={styles.title}>{matpel}</Text>
+            <Text style={styles.author}>{author}</Text>
+            <Text style={styles.subtitle}>{`${title} | ${topik}`}</Text>
           </View>
 
           <View style={styles.textColumnRight}>
             <Text style={styles.label}>Tenggat</Text>
-            <Text style={styles.date}>27 Oktober 2025</Text>
-            <Text style={styles.time}>11:59 PM</Text>
+            <Text style={styles.date}>{tanggal}</Text>
+            <Text style={styles.time}>{waktu}</Text>
           </View>
         </View>
 
         {/* Bagian Bawah */}
         <View style={styles.body}>
-          <Text style={styles.description}>
-            Jawablah soal 
-          </Text>
+          <Text style={styles.description}>{deskripsi}</Text>
 
           <View style={styles.fileSection}>
             <View style={styles.fileInfo}>
               <Image
-                source={require('../../../assets/pdf.png')} // Ganti dengan ikon PDF
+                source={fileIcon} // Ikon file dari props
                 style={styles.fileIcon}
               />
-              <Text style={styles.fileName}>Tugas_1.pdf</Text>
+              <Text style={styles.fileName}>{fileName}</Text>
             </View>
 
-            <TouchableOpacity style={styles.button}>
+            <TouchableOpacity style={styles.button} onPress={() => console.log('Kerjakan')}>
               <Text style={styles.buttonText}>Kerjakan</Text>
               <Image
-                source={require('../../../assets/edit.png')} // Ganti dengan ikon panah
+                source={buttonIcon} // Ikon tombol dari props
                 style={styles.buttonIcon}
               />
             </TouchableOpacity>
@@ -61,18 +60,49 @@ const TugasCard = () => {
   );
 };
 
+const App = () => {
+  return (
+    <ScrollView>
+      <TugasCard
+        title="Tugas 1"
+        subtitle="Trigonometri"
+        matpel="Matematika"
+        author="Wagi Artono"
+        topik="Trigonometri"
+        tanggal="27 Oktober 2025"
+        waktu="11:59 PM"
+        deskripsi="Jawablah soal berikut"
+        fileName="Tugas_1.pdf"
+        fileIcon={require('../../../assets/pdf.png')}
+        buttonIcon={require('../../../assets/edit.png')}
+      />
+      <TugasCard
+        title="Tugas 2"
+        subtitle="Integral"
+        matpel="Fisika"
+        author="Budi Santoso"
+        topik="Integral Dasar"
+        tanggal="28 Oktober 2025"
+        waktu="10:00 AM"
+        deskripsi="Kerjakan soal integral berikut"
+        fileName="Tugas_2.pdf"
+        fileIcon={require('../../../assets/pdf.png')}
+        buttonIcon={require('../../../assets/edit.png')}
+      />
+    </ScrollView>
+  );
+};
+
 const styles = StyleSheet.create({
-  container: {
-    
-    backgroundColor: '#F6F6F6',
-  },
   card: {
-    
+    marginBottom: 10,
+    backgroundColor: '#FFFFFF',
     borderRadius: 10,
     shadowColor: '#000',
-    shadowOpacity: 0.1,
+    shadowOpacity: 0.2,
     shadowOffset: { width: 0, height: 2 },
     shadowRadius: 4,
+    elevation: 2, // Untuk Android
   },
   header: {
     backgroundColor: '#98DED9',
@@ -120,21 +150,21 @@ const styles = StyleSheet.create({
   time: {
     fontSize: 12,
     color: '#FFF',
-    backgroundColor: '#FF5F5F', // Warna latar belakang yang menarik
+    backgroundColor: '#FF5F5F',
     paddingHorizontal: 5,
     paddingVertical: 2,
     borderRadius: 5,
   },
   body: {
     backgroundColor: '#FFFFFF',
-    padding: 5,
+    padding: 10,
     borderBottomLeftRadius: 10,
     borderBottomRightRadius: 10,
   },
   description: {
     fontSize: 14,
     color: '#004D40',
-    marginBottom:5,
+    marginBottom: 5,
     fontWeight: 'bold',
   },
   fileSection: {
@@ -160,7 +190,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     backgroundColor: '#0288D1',
-    padding: 2,
+    padding: 5,
     borderRadius: 5,
   },
   buttonText: {
@@ -175,4 +205,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default TugasCard;
+export default App;

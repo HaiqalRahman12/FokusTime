@@ -6,7 +6,7 @@ import TambahComponent from '../murid/tembahkelas';
 import IsiKelas from '../murid/kelas/IsiKelas';
 
 
-const KelasScreen = () => {
+const KelasScreen = ({navigation}) => {
   const [tasks, setTasks] = useState([]);
 
   useEffect(() => {
@@ -16,7 +16,7 @@ const KelasScreen = () => {
 
   return (
     <View style={styles.container}>
-      <Header />
+      <Header  />
       <ScrollView contentContainerStyle={styles.scrollContainer}>
         <View style={styles.bawa}>
           <View style={styles.tulis}>

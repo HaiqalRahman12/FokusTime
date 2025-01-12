@@ -69,7 +69,7 @@ export default Pengaturan;
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
+    backgroundColor: '#f6f6f6',
   },
   scrollContainer: {
     paddingVertical: 10,

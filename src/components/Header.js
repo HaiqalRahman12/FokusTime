@@ -1,7 +1,14 @@
 import React from 'react';
-import { View, Text, Image, StyleSheet } from 'react-native';
+import { View, Text, Image, StyleSheet, TouchableOpacity } from 'react-native';
+import { useNavigation } from '@react-navigation/native';
 
 const Header = () => {
+  const navigation = useNavigation();
+
+  const klik = () => {
+    navigation.navigate('Notif');
+  };
+
   return (
     <View style={styles.header}>
       {/* Profil */}
@@ -34,10 +41,12 @@ const Header = () => {
       </View>
 
       {/* Notifikasi */}
-      <Image
-        source={{ uri: 'https://via.placeholder.com/24' }} // Ganti dengan URL gambar lonceng Anda
-        style={styles.notificationIcon}
-      />
+      <TouchableOpacity onPress={klik}>
+        <Image
+          source={{ uri: 'https://via.placeholder.com/24' }} // Ganti dengan URL gambar lonceng Anda
+          style={styles.notificationIcon}
+        />
+      </TouchableOpacity>
     </View>
   );
 };
