@@ -12,19 +12,20 @@ import IsiKelas from '../src/murid/kelas/IsiKelas';
 import DetailKelasScreen from '../src/murid/kelas/DetailKelasScreen';
 import SignUpScreenGuru from '../src/screens/SingUpGuru';
 import Notifikasi from '../src/murid/Notifikasi';
+import GuruNavigator from '../src/TEACHER/navigatorguru/GuruNavigator';
 
 const Stack = createStackNavigator();
 
 const AppNavigator = () => {
   return (
-    <Stack.Navigator initialRouteName="TABMurid">
+    <Stack.Navigator initialRouteName="Guru">
       <Stack.Screen name="Login" component={LoginScreen} options={{ headerShown: false }} />
       <Stack.Screen name="SingUp1" component={SignUp1} options={{ headerShown: false }} />
       <Stack.Screen name="SingUp2" component={SignUp2} options={{ headerShown: false }} />
       <Stack.Screen name="SingUp3" component={SignUp3} options={{ headerShown: false }} />
       <Stack.Screen name="Daftar" component={SignUpScreenGuru} options={{ headerShown: false }} />
       <Stack.Screen name="Home" component={HomeScreen} options={{ headerShown: false }} />
-      <Stack.Screen name="Guru" component={GuruScreen} />
+      <Stack.Screen name="Guru" component={GuruNavigator} options={{ headerShown: false }}/>
       <Stack.Screen name="TABMurid" component={MuridNavigator} options={{ headerShown: false }} />
 
 {/* kelas */}
