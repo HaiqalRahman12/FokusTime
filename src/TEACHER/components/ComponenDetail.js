@@ -1,45 +1,79 @@
-
 import React, { useState } from 'react';
-import { View, Text, StyleSheet, TouchableOpacity,Image } from 'react-native';
+import {
+  View,
+  Text,
+  StyleSheet,
+  TouchableOpacity,
+  Image,
+  Modal,
+  TextInput,
+  Button,
+} from 'react-native';
+import { useNavigation } from '@react-navigation/native';
 import HeaderGuru from './Header-guru';
-
+import CardMateriGuru from './CardMateriGuru';
+import NamaMurid from './NamaSiswaGuru';
+import CardTugasGuru from './tugas';
 
 const DetailKelasScreen = ({ route }) => {
-  const { title, subtitle, totalSiswa } = route.params;
+  const { title: initialTitle, subtitle, totalSiswa } = route.params;
 
   const [activeTab, setActiveTab] = useState('Tugas');
+  const [isModalVisible, setIsModalVisible] = useState(false);
+  const [title, setTitle] = useState(initialTitle);
+  const [classTitle, setClassTitle] = useState(initialTitle); // Tambahkan state untuk classTitle
+  const [classCode, setClassCode] = useState('123456');
+  const [classLink, setClassLink] = useState('https://example.com/class');
 
   const renderContent = () => {
+    const navigation = useNavigation();
     switch (activeTab) {
       case 'Tugas':
-        return <Text>halo</Text>;
+        return <CardTugasGuru/>;
       case 'Materi':
-        return <Text>halo</Text>;
+        return <CardMateriGuru/>;
       case 'Siswa':
-        return <Text>halo</Text>;
+        return <NamaMurid navigation={navigation}/>;
       default:
         return null;
     }
+  };
+
+  const handleSave = () => {
+    setTitle(classTitle); // Perbarui title dengan nilai dari classTitle
+    console.log('Updated Title:', classTitle);
+    console.log('Class Code:', classCode);
+    console.log('Class Link:', classLink);
+    setIsModalVisible(false);
   };
 
   return (
     <View style={styles.container}>
       <HeaderGuru/>
       <View style={styles.detailContainer}>
-        <View style={styles.cardContainer}> 
+        <View style={styles.cardContainer}>
           <Image
-                style={styles.icon}
-                source={require('../../../assets/matematikakecil.png')}
-              />
-        <View style={styles.textContainer}>
-                <Text style={styles.title}>{title}</Text>
-                <Text style={styles.subtitle}>{subtitle}</Text>
-                <Text style={styles.totalSiswa}>
-                  Total Siswa: <Text style={styles.dynamicText}>{totalSiswa}</Text>
-                </Text>
-              </View>
+            style={styles.icon}
+            source={require('../../../assets/matematikakecil.png')}
+          />
+          <View style={styles.textContainer}>
+            <Text style={styles.title}>{title}</Text>
+            <Text style={styles.subtitle}>{subtitle}</Text>
+            <Text style={styles.totalSiswa}>
+              Total Siswa: <Text style={styles.dynamicText}>{totalSiswa}</Text>
+            </Text>
+          </View>
+          <TouchableOpacity
+            style={{ marginTop: 50 }}
+            onPress={() => setIsModalVisible(true)}
+          >
+            <Image
+              source={require('../../../assets/edit.png')}
+              style={{ marginTop: 10 }}
+            />
+          </TouchableOpacity>
         </View>
-        
+
         <View style={styles.tabContainer}>
           {['Tugas', 'Materi', 'Siswa'].map((tab) => (
             <TouchableOpacity
@@ -63,13 +97,43 @@ const DetailKelasScreen = ({ route }) => {
         </View>
         <View style={styles.contentContainer}>{renderContent()}</View>
       </View>
+
+      <Modal
+        animationType="slide"
+        transparent={true}
+        visible={isModalVisible}
+        onRequestClose={() => setIsModalVisible(false)}
+      >
+        <View style={styles.modalContainer}>
+          <View style={styles.modalContent}>
+            <Text style={styles.modalTitle} onPress={() => setIsModalVisible(false)}>Edit Kelas</Text>
+            <TextInput
+              style={styles.input}
+              value={classTitle} // Gunakan classTitle di TextInput
+              onChangeText={setClassTitle}
+              placeholder="Nama Kelas"
+            />
+            <Text style={styles.input}>{classCode}</Text>
+            <Text style={styles.input}>{classLink}</Text>
+            <View style={styles.modalButtonContainer}>
+              <Button title="Simpan" onPress={handleSave} />
+            </View>
+          </View>
+        </View>
+      </Modal>
     </View>
   );
 };
 
-export default DetailKelasScreen;
-
 const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor: '#f6f6f6',
+  },
+  detailContainer: {
+    flex: 1,
+    padding: 20,
+  },
   cardContainer: {
     flexDirection: 'row',
     backgroundColor: '#98DED9',
@@ -88,36 +152,11 @@ const styles = StyleSheet.create({
   title: {
     fontSize: 23,
     fontWeight: 'bold',
-  },
-  subtitle: {
-    fontSize: 12,
-    color: '#555',
-  },
-  totalSiswa: {
-    fontSize: 17,
-    color: '#333',
-  },
-  dynamicText: {
-    fontWeight: 'bold',
-    color: '#000',
-  },
-  container: {
-    flex: 1,
-    backgroundColor: '#f6f6f6',
-  },
-  detailContainer: {
-    flex: 1,
-    padding: 20,
-  },
-  title: {
-    fontSize: 23,
-    fontWeight: 'bold',
     color: '#333',
   },
   subtitle: {
     fontSize: 14,
     color: '#555',
-    marginVertical: 5,
   },
   totalSiswa: {
     fontSize: 16,
@@ -156,15 +195,35 @@ const styles = StyleSheet.create({
   },
   contentContainer: {
     flex: 1,
-    
     marginTop: 20,
-    
-    // backgroundColor: 'pink',
-    
   },
-  contentText: {
-    fontSize: 16,
-    color: '#333',
-    // textAlign: 'center',
+  modalContainer: {
+    flex: 1,
+    justifyContent: 'flex-end',
+    backgroundColor: 'rgba(0, 0, 0, 0.5)',
+  },
+  modalContent: {
+    backgroundColor: '#fff',
+    padding: 20,
+    borderTopLeftRadius: 20,
+    borderTopRightRadius: 20,
+  },
+  modalTitle: {
+    fontSize: 18,
+    fontWeight: 'bold',
+    marginBottom: 15,
+  },
+  input: {
+    borderWidth: 1,
+    borderColor: '#ccc',
+    borderRadius: 5,
+    padding: 10,
+    marginBottom: 15,
+  },
+  modalButtonContainer: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
   },
 });
+
+export default DetailKelasScreen;

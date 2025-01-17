@@ -1,55 +1,58 @@
-import React, { useState } from 'react';
-import { View, Text,Image, FlatList, StyleSheet,ScrollView } from 'react-native';
+import React from 'react';
+import { View, Text, Image, StyleSheet } from 'react-native';
 import KelasGuru from './TEACHER/Kelas';
 import HeaderGuru from './TEACHER/components/Header-guru';
-
-
-
 
 const GuruScreen = () => {
   return (
     <View style={styles.container}>
-      <HeaderGuru/>
-      <ScrollView contentContainerStyle={styles.scrollContainer}>
-        <View style={styles.bawa}>
-          <View style={styles.datang}>
-          <Image style={{ marginRight: 10}} source={require('../assets/otak.png')} />
-          <Text style={{ fontSize: 13,marginTop:10}}>Selamat datang kembali!</Text>
-          </View>
-          <View style={styles.tulis}>
-            
-              <Image style={{ marginRight: 10 }} source={require('../assets/bukukecil.png')} />
-              <Text style={{ fontSize: 23, fontWeight: 'bold' }}>Kelas</Text>
+      <HeaderGuru />
+      <View style={styles.content}>
+        <View style={styles.datang}>
+          <Image style={{ marginRight: 10 }} source={require('../assets/otak.png')} />
+          <Text style={{ fontSize: 13, marginTop: 10 }}>Selamat datang kembali!</Text>
         </View>
-        <View style={{ borderBottomWidth:1,marginBottom:10,marginTop:10 }}/>
-
-        <KelasGuru/>
         
-
+        <View style={styles.tulis}>
+          <Image style={{ marginRight: 10 }} source={require('../assets/bukukecil.png')} />
+          <Text style={{ fontSize: 23, fontWeight: 'bold' }}>Kelas</Text>
         </View>
-      </ScrollView>
+        
+        <View style={styles.divider} />
+        
+        <View style={styles.kelasContainer}>
+          <KelasGuru />
+        </View>
+      </View>
     </View>
   );
 };
 
-export default GuruScreen;
-
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    backgroundColor: 'white',
   },
-  scrollContainer: {
-    paddingVertical: 10,
-    paddingBottom: 100, // Tambahkan ruang di bawah agar tidak terhalang footer
-  },
-  bawa: {
+  content: {
+    flex: 1,
     paddingHorizontal: 20,
+    paddingTop: 10,
   },
-  datang:{
+  datang: {
     flexDirection: 'row',
-    marginBottom:10
+    marginBottom: 10,
   },
   tulis: {
     flexDirection: 'row',
-},
+    alignItems: 'center',
+  },
+  divider: {
+    borderBottomWidth: 1,
+    marginVertical: 10,
+  },
+  kelasContainer: {
+    flex: 1, // This ensures KelasGuru can take remaining space
+  }
 });
+
+export default GuruScreen;
